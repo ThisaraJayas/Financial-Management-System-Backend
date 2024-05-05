@@ -13,8 +13,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/this")
+    public String This(){
+        return "THis Page";
+    }
+
     @PostMapping("/register")
     public void Register(@RequestBody User user){
         userService.userRegister(user);
     }
+
+
 }
