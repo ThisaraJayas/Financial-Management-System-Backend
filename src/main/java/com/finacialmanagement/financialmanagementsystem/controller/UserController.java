@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     UserServiceI userService;
 
-    @GetMapping("/welcome")
+    @GetMapping("/test")
     public String This(){
         return "THis Page";
     }
