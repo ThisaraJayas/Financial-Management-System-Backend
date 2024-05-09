@@ -19,8 +19,8 @@ import java.util.Date;
 public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int incomeId;
-    private int userId;
+    private Integer incomeId;
+    private Integer userId;
     private Date date;
     private float amount;
     private String incomeCategory;
