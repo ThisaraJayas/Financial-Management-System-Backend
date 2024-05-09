@@ -7,6 +7,8 @@ import com.finacialmanagement.financialmanagementsystem.service.IncomeServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IncomeService implements IncomeServiceI {
 
@@ -24,5 +26,10 @@ public class IncomeService implements IncomeServiceI {
                 income.getIncomeCategory()
         );
         return incomeRepository.save(newIncome);
+    }
+
+    @Override
+    public List<Income> getAllIncome(Integer userId) {
+        return incomeRepository.findByUserId(userId);
     }
 }

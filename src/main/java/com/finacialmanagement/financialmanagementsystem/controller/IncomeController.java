@@ -6,9 +6,11 @@ import com.finacialmanagement.financialmanagementsystem.service.IncomeServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("http://localhost:5173")
-@RequestMapping("incomes")
+@RequestMapping("users/{userId}/incomes")
 public class IncomeController {
 
     @Autowired
@@ -18,4 +20,12 @@ public class IncomeController {
     public Income addIncome(@RequestBody IncomeDto income){
         return incomeService.addIncome(income);
     }
+
+    @GetMapping("/allincome")
+    public List<Income> getAllIncome(@PathVariable Integer userId){
+        return incomeService.getAllIncome(userId);
+    }
+
+
+
 }
