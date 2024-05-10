@@ -16,6 +16,6 @@ public interface IncomeRepository extends JpaRepository<Income,Integer> {
     @Query("SELECT SUM(i.amount) FROM Income i WHERE i.userId=:userId")
     Float getTotalIncomeByUserId(@Param("userId") Integer userId);
 
-    @Query("SELECT COUNT(i.amount) FROM Income  i WHERE i.userId=:userId AND i.date BETWEEN :startDate AND :endDate")
+    @Query("SELECT SUM(i.amount) FROM Income  i WHERE i.userId=:userId AND i.date BETWEEN :startDate AND :endDate")
     Float countIncomesByUserIdAndDateBetween(@Param("userId") Integer userId,@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 }
