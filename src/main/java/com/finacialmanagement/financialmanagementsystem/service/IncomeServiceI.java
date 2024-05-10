@@ -11,4 +11,6 @@ public interface IncomeServiceI {
     List<Income> getAllIncome(Integer userId);
 
     Float getTotalIncome(Integer userId);
+
+    Float getMonthlyIncome(Integer userId);
 }

@@ -7,6 +7,8 @@ import com.finacialmanagement.financialmanagementsystem.service.IncomeServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,5 +38,14 @@ public class IncomeService implements IncomeServiceI {
     @Override
     public Float getTotalIncome(Integer userId) {
         return incomeRepository.getTotalIncomeByUserId(userId);
+    }
+
+    @Override
+    public Float getMonthlyIncome(Integer userId) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,-30);
+        Date startDate = calendar.getTime();
+        Date endDate = new Date();
+        return incomeRepository.countIncomesByUserIdAndDateBetween(userId,startDate,endDate);
     }
 }

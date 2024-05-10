@@ -32,5 +32,9 @@ public class IncomeController {
         return incomeService.getTotalIncome(userId);
     }
 
+    @GetMapping("/monthlyincome")
+    public Float getMonthlyIncome(@PathVariable Integer userId){
+        return incomeService.getMonthlyIncome(userId);
+    }
 
 }
