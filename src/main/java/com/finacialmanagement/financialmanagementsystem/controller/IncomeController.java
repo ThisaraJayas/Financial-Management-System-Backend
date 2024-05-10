@@ -27,6 +27,10 @@ public class IncomeController {
         return incomeService.getAllIncome(userId);
     }
 
+    @GetMapping("/currentbalance")
+    public Float getTotalIncome(@PathVariable Integer userId){
+        return incomeService.getTotalIncome(userId);
+    }
 
 
 }

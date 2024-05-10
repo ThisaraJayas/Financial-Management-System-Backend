@@ -9,4 +9,6 @@ public interface IncomeServiceI {
     Income addIncome(IncomeDto income);
 
     List<Income> getAllIncome(Integer userId);
+
+    Float getTotalIncome(Integer userId);
 }

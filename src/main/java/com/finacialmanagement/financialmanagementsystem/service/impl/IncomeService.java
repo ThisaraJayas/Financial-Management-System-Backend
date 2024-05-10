@@ -32,4 +32,9 @@ public class IncomeService implements IncomeServiceI {
     public List<Income> getAllIncome(Integer userId) {
         return incomeRepository.findByUserId(userId);
     }
+
+    @Override
+    public Float getTotalIncome(Integer userId) {
+        return incomeRepository.getTotalIncomeByUserId(userId);
+    }
 }
