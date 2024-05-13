@@ -7,6 +7,8 @@ import com.finacialmanagement.financialmanagementsystem.service.ExpenseServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExpenseService implements ExpenseServiceI {
 
@@ -22,5 +24,10 @@ public class ExpenseService implements ExpenseServiceI {
                 expense.getExpenseCategory()
         );
         return expenseRepository.save(expenses);
+    }
+
+    @Override
+    public List<Expenses> getAllExpenses(Integer userId) {
+        return expenseRepository.findByUserId(userId);
     }
 }
