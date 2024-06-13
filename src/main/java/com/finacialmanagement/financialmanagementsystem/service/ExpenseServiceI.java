@@ -9,4 +9,6 @@ public interface ExpenseServiceI {
     Expenses addNewExpense(ExpenseDto expense);
 
     List<Expenses> getAllExpenses(Integer userId);
+
+    Float getTotalExpense(Integer userId);
 }

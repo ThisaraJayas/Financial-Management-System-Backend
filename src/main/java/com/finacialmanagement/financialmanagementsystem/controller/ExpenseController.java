@@ -24,4 +24,9 @@ public class ExpenseController {
     public List<Expenses> getAllExpenses(@PathVariable Integer userId){
         return expenseService.getAllExpenses(userId);
     }
+
+    @GetMapping("/currentexpenses")
+    public Float getTotalExpense(@PathVariable Integer userId){
+        return expenseService.getTotalExpense(userId);
+    }
 }

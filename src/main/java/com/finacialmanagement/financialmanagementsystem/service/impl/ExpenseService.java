@@ -30,4 +30,9 @@ public class ExpenseService implements ExpenseServiceI {
     public List<Expenses> getAllExpenses(Integer userId) {
         return expenseRepository.findByUserId(userId);
     }
+
+    @Override
+    public Float getTotalExpense(Integer userId) {
+        return expenseRepository.getTotalExpensesByUserId(userId);
+    }
 }
