@@ -7,6 +7,8 @@ import com.finacialmanagement.financialmanagementsystem.service.ExpenseServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,5 +36,14 @@ public class ExpenseService implements ExpenseServiceI {
     @Override
     public Float getTotalExpense(Integer userId) {
         return expenseRepository.getTotalExpensesByUserId(userId);
+    }
+
+    @Override
+    public Float getMonthlyExpenses(Integer userId) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
+        Date startDate = calendar.getTime();
+        Date endDate = new Date();
+        return expenseRepository.countExpenseByUserIdAndDateBetween(userId,startDate,endDate);
     }
 }

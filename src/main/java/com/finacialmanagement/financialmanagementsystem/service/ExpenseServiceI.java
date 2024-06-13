@@ -11,4 +11,6 @@ public interface ExpenseServiceI {
     List<Expenses> getAllExpenses(Integer userId);
 
     Float getTotalExpense(Integer userId);
+
+    Float getMonthlyExpenses(Integer userId);
 }

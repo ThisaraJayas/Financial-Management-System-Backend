@@ -29,4 +29,9 @@ public class ExpenseController {
     public Float getTotalExpense(@PathVariable Integer userId){
         return expenseService.getTotalExpense(userId);
     }
+
+    @GetMapping("/monthlyexpenses")
+    public Float getMonthlyExpense(@PathVariable Integer userId){
+        return expenseService.getMonthlyExpenses(userId);
+    }
 }
