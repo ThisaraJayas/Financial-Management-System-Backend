@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -20,6 +22,10 @@ public class User {
     private String username;
     private String email;
     private String password;
+
+//    @OneToMany(targetEntity = Income.class, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "ui_fk", referencedColumnName = "incomeId")
+//    private List<Income> income;
 
 
 }
