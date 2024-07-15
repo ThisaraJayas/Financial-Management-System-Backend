@@ -14,17 +14,22 @@ import java.util.List;
 @Service
 public class ExpenseService implements ExpenseServiceI {
 
+    private final ExpenseRepository expenseRepository;
+
     @Autowired
-    ExpenseRepository expenseRepository;
+    public ExpenseService(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
+    }
+
     @Override
-    public Expenses addNewExpense(ExpenseDto expense) {
-        Expenses expenses = new Expenses(
-                expense.getExpenseId(),
-                expense.getUserId(),
-                expense.getDate(),
-                expense.getAmount(),
-                expense.getExpenseCategory()
-        );
+    public Expenses addNewExpense(ExpenseDto expenseDto) {
+        Expenses expenses = new Expenses();
+        expenses.setExpenseId(expenseDto.getExpenseId());
+        expenses.setUserId(expenseDto.getUserId());
+        expenses.setDate(expenseDto.getDate());
+        expenses.setAmount(expenseDto.getAmount());
+        expenses.setExpenseCategory(expenseDto.getExpenseCategory());
+
         return expenseRepository.save(expenses);
     }
 
@@ -44,6 +49,6 @@ public class ExpenseService implements ExpenseServiceI {
         calendar.add(Calendar.DAY_OF_MONTH, -30);
         Date startDate = calendar.getTime();
         Date endDate = new Date();
-        return expenseRepository.countExpenseByUserIdAndDateBetween(userId,startDate,endDate);
+        return expenseRepository.countExpenseByUserIdAndDateBetween(userId, startDate, endDate);
     }
 }

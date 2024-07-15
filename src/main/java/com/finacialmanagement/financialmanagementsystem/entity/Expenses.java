@@ -1,19 +1,13 @@
 package com.finacialmanagement.financialmanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Expenses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +17,8 @@ public class Expenses {
     private Date date;
     private float amount;
     private String expenseCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

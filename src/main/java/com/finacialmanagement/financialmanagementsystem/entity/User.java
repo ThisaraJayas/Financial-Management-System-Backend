@@ -1,19 +1,13 @@
 package com.finacialmanagement.financialmanagementsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class User {
 
     @Id
@@ -23,9 +17,11 @@ public class User {
     private String email;
     private String password;
 
-//    @OneToMany(targetEntity = Income.class, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "ui_fk", referencedColumnName = "incomeId")
-//    private List<Income> income;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Income> incomes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Expenses> expenses;
 
 
 }

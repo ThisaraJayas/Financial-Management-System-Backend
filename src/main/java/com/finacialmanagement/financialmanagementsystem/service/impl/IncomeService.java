@@ -14,19 +14,22 @@ import java.util.List;
 @Service
 public class IncomeService implements IncomeServiceI {
 
+    private final IncomeRepository incomeRepository;
+
     @Autowired
-    IncomeRepository incomeRepository;
+    public IncomeService(IncomeRepository incomeRepository) {
+        this.incomeRepository = incomeRepository;
+    }
 
     @Override
-    public Income addIncome(IncomeDto income) {
+    public Income addIncome(IncomeDto incomeDto) {
+        Income newIncome = new Income();
+        newIncome.setIncomeId(incomeDto.getIncomeId());
+        newIncome.setUserId(incomeDto.getUserId());
+        newIncome.setDate(incomeDto.getDate());
+        newIncome.setAmount(incomeDto.getAmount());
+        newIncome.setIncomeCategory(incomeDto.getIncomeCategory());
 
-        Income newIncome = new Income(
-                income.getIncomeId(),
-                income.getUserId(),
-                income.getDate(),
-                income.getAmount(),
-                income.getIncomeCategory()
-        );
         return incomeRepository.save(newIncome);
     }
 
@@ -43,9 +46,9 @@ public class IncomeService implements IncomeServiceI {
     @Override
     public Float getMonthlyIncome(Integer userId) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH,-30);
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
         Date startDate = calendar.getTime();
         Date endDate = new Date();
-        return incomeRepository.countIncomesByUserIdAndDateBetween(userId,startDate,endDate);
+        return incomeRepository.countIncomesByUserIdAndDateBetween(userId, startDate, endDate);
     }
 }

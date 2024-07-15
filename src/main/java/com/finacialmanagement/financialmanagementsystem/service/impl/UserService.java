@@ -16,42 +16,45 @@ import java.util.Optional;
 @Service
 public class UserService implements UserServiceI {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
-    public User userRegister(UserDto user) {
-        User newUser = new User(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                this.passwordEncoder.encode( user.getPassword())
-        );
+    public User userRegister(UserDto userDto) {
+        User newUser = new User();
+        newUser.setId(userDto.getId());
+        newUser.setUsername(userDto.getUsername());
+        newUser.setEmail(userDto.getEmail());
+        newUser.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
+
         return userRepository.save(newUser);
     }
 
     @Override
-    public Object userLogin(LoginDto login) {
-        String msg = "";
-        User user = userRepository.findByEmail(login.getEmail());
+    public Object userLogin(LoginDto loginDto) {
+        User user = userRepository.findByEmail(loginDto.getEmail());
         if (user != null) {
-            String password = login.getPassword();
+            String password = loginDto.getPassword();
             String encodedPassword = user.getPassword();
             Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
             if (isPwdRight) {
-                Optional<User> user1 = userRepository.findOneByEmailAndPassword(login.getEmail(), encodedPassword);
-                if (user1.isPresent()) {
-                   return user;
+                Optional<User> userOptional = userRepository.findOneByEmailAndPassword(loginDto.getEmail(), encodedPassword);
+                if (userOptional.isPresent()) {
+                    return user;
                 } else {
                     return new LoginMessage("Login Failed", false);
                 }
             } else {
-                return new LoginMessage("password Not Match", false);
+                return new LoginMessage("Password Not Match", false);
             }
-        }else {
-            return new LoginMessage("Email not exits", false);
+        } else {
+            return new LoginMessage("Email not exists", false);
         }
     }
 }
