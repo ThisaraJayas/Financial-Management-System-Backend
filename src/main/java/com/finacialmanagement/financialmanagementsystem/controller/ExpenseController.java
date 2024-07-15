@@ -15,23 +15,24 @@ public class ExpenseController {
 
     @Autowired
     ExpenseServiceI expenseService;
+
     @PostMapping("/add")
-    public Expenses addExpense(@RequestBody ExpenseDto expense){
+    public Expenses addExpense(@RequestBody ExpenseDto expense) {
         return expenseService.addNewExpense(expense);
     }
 
     @GetMapping("/allexpenses")
-    public List<Expenses> getAllExpenses(@PathVariable Integer userId){
+    public List<Expenses> getAllExpenses(@PathVariable Integer userId) {
         return expenseService.getAllExpenses(userId);
     }
 
     @GetMapping("/currentexpenses")
-    public Float getTotalExpense(@PathVariable Integer userId){
+    public Float getTotalExpense(@PathVariable Integer userId) {
         return expenseService.getTotalExpense(userId);
     }
 
     @GetMapping("/monthlyexpenses")
-    public Float getMonthlyExpense(@PathVariable Integer userId){
+    public Float getMonthlyExpense(@PathVariable Integer userId) {
         return expenseService.getMonthlyExpenses(userId);
     }
 }

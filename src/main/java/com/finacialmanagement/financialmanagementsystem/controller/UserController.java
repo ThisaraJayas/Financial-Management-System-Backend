@@ -11,7 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("auth/users")
 @CrossOrigin("http://localhost:5173")
 public class UserController {
 
@@ -19,35 +19,18 @@ public class UserController {
     UserServiceI userService;
 
     @GetMapping("/test")
-    public String This(){
-        return "THis Page";
+    public String test() {
+        return "This Page";
     }
 
     @PostMapping("/register")
-    public User Register(@RequestBody UserDto user){
+    public User register(@RequestBody UserDto user) {
         return userService.userRegister(user);
     }
+
     @PostMapping("/login")
-    public ResponseEntity<?>Login(@RequestBody LoginDto login){
+    public ResponseEntity<?> login(@RequestBody LoginDto login) {
         Object loginMessage = userService.userLogin(login);
         return ResponseEntity.ok(loginMessage);
     }
-//    @PostMapping  ("/login")
-//    public ResponseEntity<UserDetails> login(@RequestBody User user){
-//        String username = user.getEmail();
-//        String password = user.getPassword();
-//        Authentication authentication= authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(username, password)
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return new ResponseEntity<UserDetails>((UserDetails) user, HttpStatus.OK);
-//    }
-
-
-
-//    @PostMapping("/login")
-//    public User Login(@RequestBody User user){
-//       return (User) userService.loadUserByUsername(user.getName());
-//    }
-
 }

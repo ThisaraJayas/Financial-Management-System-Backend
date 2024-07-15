@@ -1,5 +1,6 @@
 package com.finacialmanagement.financialmanagementsystem.config;
 
+import com.finacialmanagement.financialmanagementsystem.config.JwtTokenValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,28 +22,27 @@ import java.util.Collections;
 public class AppConfig {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.sessionManagement(Management ->Management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(Authorize -> Authorize.requestMatchers("/api/**").authenticated()
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/user/**").authenticated()
                         .anyRequest().permitAll())
-                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class) //this check jwttoken validate or not
-                .csrf(csrf->csrf.disable())
-                .cors(cors->cors.configurationSource(corsConfigurationSource())); //interact with frontend
+                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
         return http.build();
     }
 
-    //cors configuration interact with frontend
     private CorsConfigurationSource corsConfigurationSource() {
         return new CorsConfigurationSource() {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration cfg=new CorsConfiguration();
+                CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOrigins(Arrays.asList(
                         "http://localhost:3000",
-                        "http://localhost:5173", //vite
-                        "http://localhost:4200" //angular
+                        "http://localhost:5173",
+                        "http://localhost:4200"
                 ));
-                cfg.setAllowedMethods(Collections.singletonList("*")); //permission for get/post/put..
+                cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
                 cfg.setExposedHeaders(Arrays.asList("Authorization"));
@@ -50,9 +50,5 @@ public class AppConfig {
                 return cfg;
             }
         };
-    }
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
     }
 }
